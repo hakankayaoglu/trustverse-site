@@ -1,0 +1,80 @@
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TrustVerse | Cüzdan Takip Paneli</title>
+  <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
+  <style>
+    body { background-color: #0a0a0a; color: #f2f2f2; font-family: monospace; padding: 20px; }
+    h1 { color: #86b7ff; text-align: center; }
+    table { width: 100%; border-collapse: collapse; margin-top: 30px; }
+    th, td { border: 1px solid #444; padding: 10px; text-align: left; }
+    th { background-color: #1a1a1a; }
+    tr:hover { background-color: #222; }
+  </style>
+</head>
+<body>
+  <nav style="background-color: #1a1a1a; padding: 10px; text-align: center; position: sticky; top: 0; z-index: 1000;">
+    <a href="#" style="color: #86b7ff; margin: 0 15px; text-decoration: none; font-weight: bold;">Cüzdan Takibi</a>
+    <a href="#sss" style="color: #86b7ff; margin: 0 15px; text-decoration: none;">SSS</a>
+    <a href="#yatirimci" style="color: #86b7ff; margin: 0 15px; text-decoration: none;">Yatırımcı</a>
+    <a href="#mobil" style="color: #86b7ff; margin: 0 15px; text-decoration: none;">Mobil Uygulama</a>
+  </nav>
+  <h1>📊 Cüzdan Takip Paneli</h1>
+  <p><strong>Cüzdan Adresi:</strong> <code>0x8fC06Dc821d6aFff732E46D4A203a7E71988DE7F</code></p>
+  <table>
+    <thead><tr><th>İşlem Hash</th><th>Gönderen</th><th>Miktar (ETH)</th><th>Tarih</th></tr></thead>
+    <tbody id="txTable"><tr><td colspan="4">İşlemler yükleniyor...</td></tr></tbody>
+  </table>
+  <script>
+    async function fetchTransactions() {
+      const address = "0x8fC06Dc821d6aFff732E46D4A203a7E71988DE7F";
+      const url = `https://api.etherscan.io/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=desc&apikey=QQ44TWKM45GUWYXAXF56B4SETXHVJE12Z9`;
+      const res = await fetch(url); const data = await res.json();
+      const table = document.getElementById("txTable"); table.innerHTML = "";
+      data.result.slice(0, 10).forEach(tx => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td><a href="https://etherscan.io/tx/${tx.hash}" target="_blank">${tx.hash.slice(0, 10)}...</a></td>
+          <td>${tx.from}</td>
+          <td>${parseFloat(tx.value) / 1e18}</td>
+          <td>${new Date(tx.timeStamp * 1000).toLocaleString()}</td>`;
+        table.appendChild(row);
+      });
+    }
+    fetchTransactions();
+  </script>
+  <section id="sss" style="margin-top: 60px;">
+    <h2>❓ Sıkça Sorulan Sorular (SSS)</h2>
+    <ul>
+      <li><strong>TVR token'ı nereden satın alabilirim?</strong><br> Satın alma işlemini ana sayfadaki "TVR Satın Al" bölümünden gerçekleştirebilirsiniz.</li>
+      <li><strong>Token’larım ne zaman dağıtılacak?</strong><br> Public sale sonrası 48 saat içinde dağıtım yapılacaktır.</li>
+      <li><strong>TrustVerse bir DAO mudur?</strong><br> Evet. Topluluk, yönetişim kararlarını DAO aracılığıyla verir.</li>
+      <li><strong>Token’larımı nasıl saklayabilirim?</strong><br> Metamask, Trust Wallet gibi ERC-20 uyumlu cüzdanları kullanabilirsiniz.</li>
+    </ul>
+  </section>
+  <section id="yatirimci" style="margin-top: 60px;">
+    <h2>💼 Yatırımcı Bilgilendirme</h2>
+    <p>TrustVerse, stratejik yatırımcılara özel fırsatlar ve şeffaflık ilkesine dayalı yatırım süreçleri sunar.</p>
+    <ul>
+      <li><strong>Yatırımcı Paketi:</strong> Minimum 10 ETH ile katılım, %10 bonus TVR</li>
+      <li><strong>Vesting Planı:</strong> 3 ay kilitli, ardından 6 ay eşit açılım</li>
+      <li><strong>Raporlama:</strong> Aylık token kullanım ve ilerleme raporları</li>
+      <li><strong>Gizlilik:</strong> Yatırımcı bilgileri şifrelenmiş şekilde saklanır</li>
+    </ul>
+    <p>Daha fazla bilgi için <a href="mailto:invest@trustverse.io" style="color:#86b7ff;">invest@trustverse.io</a></p>
+  </section>
+  <section id="mobil" style="margin-top: 60px;">
+    <h2>📱 Mobil Uygulama Tanıtımı</h2>
+    <p>TrustVerse mobil uygulaması ile dijital varlıklarınızı cebinizden yönetin. TVR token gönderin, alın ve yönetişim tekliflerine katılın.</p>
+    <ul>
+      <li><strong>iOS & Android:</strong> App Store ve Google Play üzerinden yayınlanacaktır</li>
+      <li><strong>Özellikler:</strong> TVR cüzdanı, DAO oylamaları, NFT görüntüleme</li>
+      <li><strong>Güvenlik:</strong> Parmak izi/FaceID desteği, zincir üstü şifreleme</li>
+    </ul>
+    <p>📲 Ön kayıt için <a href="mailto:mobile@trustverse.io" style="color:#86b7ff;">mobile@trustverse.io</a></p>
+  </section>
+</body>
+</html>
